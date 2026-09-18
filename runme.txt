@@ -1,0 +1,2 @@
+go to aaron/drupal_sample/web
+run this "php -S localhost:8888 .ht.router.php"
