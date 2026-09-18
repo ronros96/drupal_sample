@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="{{ language.getId }}">
+  <head>
+    <head-placeholder token="{{ placeholder_token }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    <css-placeholder token="{{ placeholder_token }}">
+    <js-placeholder token="{{ placeholder_token }}">
+  </head>
+
+  <body{{ attributes }}>
+
+    <header class="site-header">
+      <div class="container">
+
+        <div class="site-logo">
+          <a href="{{ path('<front>') }}">
+            {{ site_name }}
+          </a>
+        </div>
+
+        {% if page.primary_menu %}
+          <nav class="primary-menu">
+            {{ page.primary_menu }}
+          </nav>
+        {% endif %}
+
+      </div>
+    </header>
+
+    <main class="site-main">
+
+      <div class="container">
+
+        <section class="content">
+          {{ page.content }}
+        </section>
+
+      </div>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        {{ page.footer }}
+      </div>
+    </footer>
+
+    <js-bottom-placeholder token="{{ placeholder_token }}">
+
+  </body>
+</html>
