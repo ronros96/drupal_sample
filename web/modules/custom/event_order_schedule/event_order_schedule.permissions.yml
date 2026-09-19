@@ -1,0 +1,4 @@
+administer event order schedule:
+  title: 'Administer event order schedule'
+  description: 'Configure and administer event order schedules.'
+  restrict access: true

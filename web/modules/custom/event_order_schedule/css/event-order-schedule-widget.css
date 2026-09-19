@@ -1,0 +1,27 @@
+.field--type-event-order-schedule{
+  padding: 16px;
+  border: solid 1px var(--ck-color-base-border);
+  border-radius: var(--ck-border-radius);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+
+.event-order-schedule__title{
+  width: 100%;
+  padding-top: 16px;
+  margin: 0;
+  font-weight: 700;
+  border-top: solid 1px var(--ck-color-base-border);
+}
+
+.event-order-schedule__desc{
+  width: 100%;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .field--type-event-order-schedule{
+    display: block;
+  }
+}

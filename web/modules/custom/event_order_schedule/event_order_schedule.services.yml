@@ -1,0 +1,6 @@
+services:
+  event_order_schedule.manager:
+    class: Drupal\event_order_schedule\Service\EventOrderScheduleManager
+    arguments:
+      - '@entity_type.manager'
+      - '@logger.factory'

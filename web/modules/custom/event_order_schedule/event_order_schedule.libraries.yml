@@ -1,0 +1,4 @@
+widget:
+  css:
+    theme:
+      css/event-order-schedule-widget.css: {}

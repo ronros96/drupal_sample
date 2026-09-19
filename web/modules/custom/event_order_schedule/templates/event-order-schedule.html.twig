@@ -1,0 +1,71 @@
+<div class="event-order-schedule event-order-schedule--{{ state }}">
+
+  {% if state == 'ended' %}
+
+    <div class="event-order-schedule__ended">
+      Event Ended
+    </div>
+
+  {% elseif state == 'upcoming' %}
+
+    <div class="event-order-schedule__event">
+      <strong>Event:</strong>
+      {{ event_start }}
+    </div>
+
+    {% if preorder_start %}
+      <div class="event-order-schedule__preorder-start">
+        Pre-order starts:
+        {{ preorder_start }}
+      </div>
+    {% endif %}
+
+    {% if price %}
+      <div class="event-order-schedule__price">
+        {{ price }}
+      </div>
+    {% endif %}
+
+  {% elseif state == 'preorder' %}
+
+    <div class="event-order-schedule__event">
+      <strong>Event:</strong>
+      {{ event_start }}
+    </div>
+
+    <div class="event-order-schedule__price">
+      {{ price }}
+    </div>
+
+    {% if button %}
+      <a
+        href="{{ button.url }}"
+        class="event-order-schedule__button"
+      >
+        {{ button.text }}
+      </a>
+    {% endif %}
+
+  {% elseif state == 'regular' %}
+
+    <div class="event-order-schedule__event">
+      <strong>Event:</strong>
+      {{ event_start }}
+    </div>
+
+    <div class="event-order-schedule__price">
+      {{ price }}
+    </div>
+
+    {% if button %}
+      <a
+        href="{{ button.url }}"
+        class="event-order-schedule__button"
+      >
+        {{ button.text }}
+      </a>
+    {% endif %}
+
+  {% endif %}
+
+</div>

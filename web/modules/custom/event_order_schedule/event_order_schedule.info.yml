@@ -1,0 +1,8 @@
+name: Event Order Schedule
+type: module
+description: Provides an event ordering schedule field with automatic publishing and ordering states.
+package: Custom
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - drupal:field
