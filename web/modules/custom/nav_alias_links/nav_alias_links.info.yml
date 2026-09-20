@@ -1,0 +1,7 @@
+name: Nav Alias Links
+type: module
+description: 'Uses Pathauto aliases for outbound node links.'
+package: Custom
+core_version_requirement: ^11
+dependencies:
+  - drupal:path_alias

@@ -1,0 +1,8 @@
+name: 'Custom Slug'
+type: module
+description: 'Auto-generates field_slug from the node title and locks the widget.'
+package: Custom
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:node
+  - pathauto:pathauto

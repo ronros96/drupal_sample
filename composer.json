@@ -20,6 +20,7 @@
         "drupal/core-composer-scaffold": "^11.0",
         "drupal/core-project-message": "^11.0",
         "drupal/core-recommended": "^11.0",
+        "drupal/pathauto": "1.15",
         "drupal/webform": "6.3"
     },
     "conflict": {

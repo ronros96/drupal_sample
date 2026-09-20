@@ -1,0 +1,92 @@
+<?php
+
+/**
+ * @file
+ * Auto-populates field_slug from the node title.
+ */
+
+use Drupal\Core\Entity\ContentEntityFormInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Turns any string into a URL-safe slug.
+ *
+ * "Grand Hall & Café (Level 2)" => "grand-hall-cafe-level-2"
+ */
+function custom_slug_slugify(string $text): string {
+  // Transliterate accents and non-Latin scripts down to ASCII.
+  $text = \Drupal::transliteration()->transliterate($text, 'en', '-');
+  $text = mb_strtolower($text);
+  // Everything that is not a letter or digit becomes a dash.
+  $text = preg_replace('/[^a-z0-9]+/', '-', $text);
+  // Collapse and trim stray dashes.
+  $text = trim(preg_replace('/-+/', '-', $text), '-');
+
+  return mb_substr($text, 0, 255);
+}
+
+/**
+ * Maps content type (bundle) machine names to their URL prefix segment.
+ *
+ * Add an entry here for every content type that should get a prefixed
+ * slug. Content types not listed get no prefix (just the slugified title).
+ */
+function custom_slug_bundle_prefixes(): array {
+  return [
+    'amenities' => 'amenity',
+    'event' => 'event',
+    // 'bundle_machine_name' => 'url-prefix',
+  ];
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function custom_slug_entity_presave(EntityInterface $entity) {
+  if (!$entity instanceof NodeInterface) {
+    return;
+  }
+  if (!$entity->hasField('field_slug')) {
+    return;
+  }
+  $title = (string) $entity->label();
+  if ($title === '') {
+    return;
+  }
+
+  // Regenerate on every save so the slug always matches the current title.
+  // To freeze the slug after the first save, wrap this in:
+  // if ($entity->isNew() || $entity->get('field_slug')->isEmpty()) { ... }
+  $slug = custom_slug_slugify($title);
+
+  // $prefixes = custom_slug_bundle_prefixes();
+  // $bundle = $entity->bundle();
+  // if (isset($prefixes[$bundle])) {
+  //   $slug = $prefixes[$bundle] . '/' . $slug;
+  // }
+
+  $entity->set('field_slug', $slug);
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Shows the slug on the node form but prevents editing.
+ */
+function custom_slug_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  $form_object = $form_state->getFormObject();
+  if (!$form_object instanceof ContentEntityFormInterface) {
+    return;
+  }
+  if ($form_object->getEntity()->getEntityTypeId() !== 'node') {
+    return;
+  }
+  if (!isset($form['field_slug'])) {
+    return;
+  }
+
+  $form['field_slug']['#disabled'] = TRUE;
+  $form['field_slug']['widget'][0]['value']['#description'] = t('Generated automatically from the title.');
+}

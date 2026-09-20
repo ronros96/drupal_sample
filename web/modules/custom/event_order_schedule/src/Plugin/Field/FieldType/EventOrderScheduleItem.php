@@ -14,7 +14,7 @@ use Drupal\Core\TypedData\DataDefinition;
  *   id = "event_order_schedule",
  *   label = @Translation("Event Order Schedule"),
  *   description = @Translation("Stores event and ordering schedule information."),
- *   category = @Translation("Custom"),
+ *   category = "custom",
  *   default_widget = "event_order_schedule_widget",
  *   default_formatter = "event_order_schedule_formatter"
  * )
