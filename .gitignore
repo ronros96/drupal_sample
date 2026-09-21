@@ -53,6 +53,9 @@
 /web/update.php
 /web/web.config
 
+# Ignore custom theme NPM modules
+node_modules/
+
 # Ignore vendor dependencies and scripts
 /vendor
 /composer.phar

@@ -1,0 +1,5 @@
+name: Slug Converter
+type: module
+description: 'Replaces node URLs in the main navigation with content-type/slug URLs.'
+package: Custom
+core_version_requirement: ^11

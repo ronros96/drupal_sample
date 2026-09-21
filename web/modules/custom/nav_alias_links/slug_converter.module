@@ -1,0 +1,88 @@
+<?php
+
+use Drupal\Core\Url;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_preprocess_menu().
+ */
+function slug_converter_preprocess_menu(array &$variables) {
+
+  // Only modify the Main navigation.
+  if (($variables['menu_name'] ?? '') !== 'main') {
+    return;
+  }
+
+  if (empty($variables['items'])) {
+    return;
+  }
+
+  slug_converter_process_menu_items($variables['items']);
+}
+
+/**
+ * Process menu items recursively.
+ */
+function slug_converter_process_menu_items(array &$items) {
+
+  foreach ($items as &$item) {
+
+    if (!empty($item['url'])) {
+      $url = $item['url'];
+
+      // Only process canonical node URLs.
+      if ($url->isRouted()
+        && $url->getRouteName() === 'entity.node.canonical'
+      ) {
+
+        $route_parameters = $url->getRouteParameters();
+
+        if (!empty($route_parameters['node'])) {
+
+          $node = $route_parameters['node'];
+
+          // The route parameter can be a node object or node ID.
+          if (is_numeric($node)) {
+            $node = \Drupal::entityTypeManager()
+              ->getStorage('node')
+              ->load($node);
+          }
+
+          if ($node instanceof NodeInterface) {
+
+            // Change this if your slug field has a different machine name.
+            $slug_field = 'field_slug';
+
+            if (
+              $node->hasField($slug_field)
+              && !$node->get($slug_field)->isEmpty()
+            ) {
+
+              $slug = $node->get($slug_field)->value;
+
+              // Get content type machine name.
+              $content_type = $node->bundle();
+              if($content_type === 'amenities'){
+                $content_type = 'amenity';
+              }
+
+              if ($slug && $content_type) {
+
+                // Build:
+                // /content-type/slug
+                $path = '/' . $content_type . '/' . trim($slug, '/');
+
+                $item['url'] = Url::fromUserInput($path);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Process children / dropdown menu items.
+    if (!empty($item['below'])) {
+      slug_converter_process_menu_items($item['below']);
+    }
+  }
+}
