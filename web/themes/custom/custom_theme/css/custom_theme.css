@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&display=swap');
+
+*{
+  box-sizing: border-box;
+}
+
+@keyframes showOverlay {
+  from{opacity: 0;}
+  to{opacity: 1;}  
+}
+
+:root{
+  color: #fff;
+  font-family: "Commissioner", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: initial;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0,
+    "FLAR" 0,
+    "VOLM" 0;
+}
+
+body{
+  position: relative;
+  background-color: #222121;
+  margin: 0;
+}
+
+ul,li{
+  margin: 0;
+  padding: 0;
+}
+
+li{
+  list-style: none;
+}
+
+
+header{
+  position: fixed;
+  z-index: 10;
+  left: -20rem;
+
+  transition: left .5s ease-in-out;
+
+  ul{
+    padding: 16px 0;
+    width: 20rem;
+    height: 100svh;
+    background-color: #000;
+  }
+
+  li{
+    list-style: none;
+    border-bottom: solid 1px #222;
+  }
+
+  li a{
+    display: block;
+    padding: 16px 20px;
+    font-size: 2rem;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  &.open{
+    left: 0;
+  }
+}
+
+main{
+  position: relative;
+  padding: 0;
+  height: 100%;
+}
+
+#block-custom-theme-page-title{
+  position: sticky;
+  top:0;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  padding: 20px 0;
+  margin: 0 20px 20px;
+  border-bottom: solid 1px #302f2f;
+  background-color: #222121;
+  z-index: 5;
+
+  transition:
+  margin .5s ease-in-out,
+  padding .5s ease-in-out;
+
+  h1{
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .menu{
+    position: relative;
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+  }
+
+  .menu span{
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 5px;
+    background-color: #fff;
+
+    transition: 
+    top .5s ease-in-out,
+    left .5s ease-in-out,
+    width .5s ease-in-out,
+    transform .5s ease-in-out;
+  }
+
+  .menu span:nth-of-type(1){
+    top:0;
+    left: 0;
+    width: 100%;
+    transform: rotate(0deg);
+  }
+
+  .menu span:nth-of-type(2){
+    top:calc(1.5rem - 2.5px);
+    left: 0;
+  }
+
+  .menu span:nth-of-type(3){
+    top:calc(3rem - 5px);
+    left: 0;
+    width: 100%;
+    transform: rotate(0deg);
+  }
+}
+
+.overlay{
+  display: none;
+  position: absolute;
+  inset: 0;
+  background-color: #00000088;
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  z-index: 2;
+
+  transition: opacity .5s ease-in-out;
+}
+
+body:has(header.open) #block-custom-theme-page-title{
+  margin-left: 20rem;
+  margin-right: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  .menu span:nth-of-type(1){
+    top:calc(5px + .5rem);
+    width: 2rem;
+    transform: rotate(-45deg);
+  }
+
+  .menu span:nth-of-type(2){
+    left: 50%;
+    width: 50%;
+  }
+
+  .menu span:nth-of-type(3){
+    top:calc(0px + 2rem);
+    width: 2rem;
+    transform: rotate(45deg);
+  }
+}
+
+body:has(header.open) .overlay{
+  display: block;
+  animation: showOverlay .5s ease-in-out forwards;
+}
+
+#block-custom-theme-content{
+  margin: 50px auto;
+  max-width: 1200px;
+
+  h2{
+    font-size: 3rem;
+  }
+}
+
+#block-custom-theme-views-block-frontpage-amenity-list{
+  margin: 50px auto;
+  padding: 0 20px;
+
+   h3 a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 2rem;
+  }
+
+  .amenity-list{
+    position: relative;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+  }
+
+  .swiper{
+    position: relative;
+    padding:0;
+    margin: 0 auto;
+    max-width: 1200px;
+    overflow: hidden;
+  }
+  .swiper-wrapper{
+    padding: 0;
+    margin: 0;
+  }
+  
+  .swiper-slide{
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    background-color: #0e0d0d;
+  }
+
+  .views-field-field-banner{
+    width: 100%;
+    height: auto;
+    img{
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  .desc-content{
+    width: 100%;
+    padding: 0 2rem;
+  }
+
+  .views-field-field-slug a{
+    display: inline-block;
+    margin-top: .83em;
+    padding: 16px 20px;
+    background-color: #2f7c69;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: .8rem;
+    font-weight: 700;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next{
+    position: relative;
+    z-index: 2;
+    color: #fff;
+  }
+}
+
+body:has(.amenity-page) #block-custom-theme-page-title{
+  margin: 0;
+  padding: 20px;
+}
+
+.amenity-page{
+  
+}

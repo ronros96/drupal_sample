@@ -1,0 +1,5 @@
+name: Custom Views
+type: module
+description: Gets content type machine name to Views list preprocessing.
+package: Custom
+core_version_requirement: ^11

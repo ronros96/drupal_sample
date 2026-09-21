@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * Implements hook_preprocess_views_view_list().
+ */
+
+/*function custom_view_preprocess_views_view_list(
+  array &$variables
+): void {
+  $variables['content_type'] = '';
+
+  $view = $variables['view'];
+
+  // Get the first result.
+  if (!empty($view->result[0]->_entity)) {
+    $entity = $view->result[0]->_entity;
+
+    if ($entity->getEntityTypeId() === 'node') {
+      $variables['content_type'] = $entity->bundle();
+    }
+  }
+}*/
+
+function custom_view_preprocess_views_view_list(
+  array &$variables
+): void {
+  $swipe_enabled = [
+    'amenities',
+    'event',
+    'hotel',
+  ];
+
+  $variables['content_type'] = FALSE;
+
+  $view = $variables['view'];
+  $display_plugin = $view->display_handler->getPluginId();
+
+  foreach ($view->result as $result) {
+    // echo"<script>console.log('".$result."')</script>";
+    if (
+      !empty($result->_entity) &&
+      $result->_entity->getEntityTypeId() === 'node' &&
+      $display_plugin === 'block'
+    ) {
+      $content_type = $result->_entity->bundle();
+
+      if (in_array($content_type, $swipe_enabled, TRUE)) {
+        $variables['is_block'] = TRUE;
+      }
+
+      break;
+    }
+  }
+}

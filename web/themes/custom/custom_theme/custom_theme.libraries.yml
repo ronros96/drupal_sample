@@ -1,7 +1,8 @@
 global:
   css:
     theme:
-      css/style.css: {}
+      dist/custom_theme.css: {}
+      css/custom_theme.css: {}
 
   js:
-    js/script.js: {}
+    dist/custom_theme.js: {}

@@ -6,7 +6,7 @@ description: 'A simple custom Drupal theme.'
 package: Custom
 
 libraries:
-  - simple_theme/global
+  - custom_theme/global
 
 regions:
   header: Header
