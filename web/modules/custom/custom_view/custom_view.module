@@ -4,23 +4,6 @@
  * Implements hook_preprocess_views_view_list().
  */
 
-/*function custom_view_preprocess_views_view_list(
-  array &$variables
-): void {
-  $variables['content_type'] = '';
-
-  $view = $variables['view'];
-
-  // Get the first result.
-  if (!empty($view->result[0]->_entity)) {
-    $entity = $view->result[0]->_entity;
-
-    if ($entity->getEntityTypeId() === 'node') {
-      $variables['content_type'] = $entity->bundle();
-    }
-  }
-}*/
-
 function custom_view_preprocess_views_view_list(
   array &$variables
 ): void {
@@ -36,7 +19,6 @@ function custom_view_preprocess_views_view_list(
   $display_plugin = $view->display_handler->getPluginId();
 
   foreach ($view->result as $result) {
-    // echo"<script>console.log('".$result."')</script>";
     if (
       !empty($result->_entity) &&
       $result->_entity->getEntityTypeId() === 'node' &&
@@ -46,9 +28,42 @@ function custom_view_preprocess_views_view_list(
 
       if (in_array($content_type, $swipe_enabled, TRUE)) {
         $variables['is_block'] = TRUE;
+        if($content_type === 'event'){
+           $variables['is_teaser'] = TRUE;
+        }
       }
 
       break;
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_block().
+ */
+
+function custom_view_preprocess_block(array &$variables) {
+  $path = \Drupal::service('path.current')->getPath();
+  $parts = explode('/', trim($path, '/'));
+  $variables['node_title'] = '';
+  $variables['show_menu'] = TRUE;
+
+  if ($variables['plugin_id'] !== 'page_title_block') {
+    $variables['show_menu'] = FALSE;
+    return;
+  }
+
+  if (count($parts) === 2) {
+    $slug = $parts[1];
+
+    $nodes = \Drupal::entityTypeManager()
+      ->getStorage('node')
+      ->loadByProperties(['field_slug' => $slug]);
+
+    $node = reset($nodes);
+
+    if ($node instanceof \Drupal\node\NodeInterface) {
+      $variables['node_title'] = $node->getTitle();
     }
   }
 }

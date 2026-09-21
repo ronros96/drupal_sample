@@ -21,6 +21,7 @@
         "drupal/core-project-message": "^11.0",
         "drupal/core-recommended": "^11.0",
         "drupal/pathauto": "1.15",
+        "drupal/views_taxonomy_term_name_depth": "7.3",
         "drupal/webform": "6.3"
     },
     "conflict": {

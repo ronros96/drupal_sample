@@ -27,7 +27,7 @@
   {% if is_block %}  
 
     <div class="swiper-button-prev"></div>
-    <div class="swiper">
+    <div class={{is_teaser ? 'swiper-teaser' : 'swiper-large'}}>
       <{{ list.type }} class="swiper-wrapper">
           {% for row in rows %}
             <li class="swiper-slide">
@@ -37,6 +37,7 @@
       </{{ list.type }}>
     </div>
     <div class="swiper-button-next"></div>
+    <div class="swiper-pagination"></div>
 
   {% else %} 
 

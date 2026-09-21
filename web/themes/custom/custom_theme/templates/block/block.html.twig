@@ -28,12 +28,17 @@
 #}
 
 <div{{ attributes }}>
+  {%- if show_menu -%}
   <div class="menu">
     <span></span>
     <span></span>
     <span></span>
   </div>
-  {{ title_prefix }}
+  {%- endif %}
+  {{title_prefix}}
+  {%- if node_title -%}
+  <h1>{{node_title}}</h1>
+  {%- endif %}
   {% if label %}
     <h2{{ title_attributes }}>{{ label }}</h2>
   {% endif %}

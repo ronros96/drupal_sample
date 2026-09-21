@@ -31,7 +31,7 @@
 #}
 {% for field in fields -%}
   {{ field.separator }}
-  {%- if field.class == 'field-banner' -%}
+  {%- if field.class == 'field-banner' or field.class == 'field-thumbnail' -%}
     <{{ field.wrapper_element }} class="img-content">
     {%- if field.wrapper_element -%}
       <{{ field.wrapper_element }}{{ field.wrapper_attributes }}>

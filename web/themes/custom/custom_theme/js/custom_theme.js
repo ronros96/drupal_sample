@@ -5,10 +5,27 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-const swiper = new Swiper('.swiper', {
+const swiperLarge = new Swiper('.swiper-large', {
   modules: [Navigation, Pagination],
 
   slidesPerView: 1,
+  spaceBetween: 20,
+
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+  },
+});
+
+const swiperTeaser = new Swiper('.swiper-teaser', {
+  modules: [Navigation, Pagination],
+
+  slidesPerView: 3,
   spaceBetween: 20,
 
   navigation: {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2118512b617ce0ac9618544065efc906",
+    "content-hash": "78d3e5559c3e1fc10fda5ad22e21dfda",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1144,6 +1144,63 @@
             "homepage": "https://www.drupal.org/project/token",
             "support": {
                 "source": "https://git.drupalcode.org/project/token"
+            }
+        },
+        {
+            "name": "drupal/views_taxonomy_term_name_depth",
+            "version": "7.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/views_taxonomy_term_name_depth.git",
+                "reference": "7.3.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/views_taxonomy_term_name_depth-7.3.0.zip",
+                "reference": "7.3.0",
+                "shasum": "44c490175a50309558cd7db00c9395463c3f9194"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10 || ^11",
+                "drupal/pathauto": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.3.0",
+                    "datestamp": "1748681583",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "baikho",
+                    "homepage": "https://www.drupal.org/user/2727459"
+                },
+                {
+                    "name": "jaykandari",
+                    "homepage": "https://www.drupal.org/user/2876519"
+                },
+                {
+                    "name": "manojapare",
+                    "homepage": "https://www.drupal.org/user/2825053"
+                },
+                {
+                    "name": "rakesh.gectcr",
+                    "homepage": "https://www.drupal.org/user/1177822"
+                }
+            ],
+            "description": "The module provides the Views plugin for Contextual filter with Taxonomy Term Name Depth.",
+            "homepage": "https://www.drupal.org/project/views_taxonomy_term_name_depth",
+            "support": {
+                "source": "https://git.drupalcode.org/project/views_taxonomy_term_name_depth"
             }
         },
         {
