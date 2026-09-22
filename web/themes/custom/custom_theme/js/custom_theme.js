@@ -72,4 +72,25 @@ menu.addEventListener('click',()=>{
     header.classList.remove('open')
     menu.classList.remove('open')
   }
-})
+});
+
+(function (Drupal) {
+  Drupal.behaviors.eventOrderScheduleScroll = {
+    attach(context) {
+      if (context !== document) {
+        return;
+      }
+
+      if (window.location.hash === '#book') {
+        const target = document.querySelector('.event-order-schedule');
+
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
+      }
+    }
+  };
+})(Drupal);

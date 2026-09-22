@@ -103,7 +103,7 @@ class EventOrderScheduleFormatter extends FormatterBase {
           '#regular_price' => $item->regular_price,
           '#button' => [
             'text' => 'Pre-book now',
-            'url' => '#',
+            'url' => $content_url,
           ],
           '#cta' => 
           [
@@ -167,7 +167,7 @@ class EventOrderScheduleFormatter extends FormatterBase {
           '#button' => $can_order
             ? [
                 'text' => 'Book now',
-                'url' => '#',
+                'url' => $content_url,
               ]
             : NULL,
           '#cta' => 
