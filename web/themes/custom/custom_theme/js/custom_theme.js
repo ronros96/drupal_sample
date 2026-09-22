@@ -25,8 +25,23 @@ const swiperLarge = new Swiper('.swiper-large', {
 const swiperTeaser = new Swiper('.swiper-teaser', {
   modules: [Navigation, Pagination],
 
-  slidesPerView: 3,
+  slidesPerView: 1,
   spaceBetween: 20,
+  centeredSlides: true,
+  breakpoints: {
+    640: {
+      centeredSlides: true,
+      slidesPerView: 1.5,
+    },
+    768: {
+      centeredSlides: false,
+      slidesPerView: 2,
+    },
+    1024:{
+      centeredSlides: false,
+      slidesPerView: 3,
+    }
+  },
 
   navigation: {
     nextEl: '.swiper-button-next',

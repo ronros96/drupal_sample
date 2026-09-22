@@ -40,6 +40,9 @@ class EventOrderScheduleFormatter extends FormatterBase {
       $regular_start = $this->date($item->regular_start);
       $regular_end = $this->date($item->regular_end);
       $event_end = $this->date($item->event_end);
+      $event_duration = $event_start->diff($event_end)->days + 1;
+      $entity = $items->getEntity();
+      $content_url = $entity->get('field_slug')->value;
 
       /*
        * Event ended.
@@ -49,8 +52,16 @@ class EventOrderScheduleFormatter extends FormatterBase {
           '#theme' => 'event_order_schedule',
           '#state' => 'ended',
           '#event_start' => NULL,
-          '#price' => NULL,
+          '#event_end' => NULL,
+          '#event_duration' => NULL,
+          '#preorder_price' => NULL,
+          '#regular_price' => NULL,
           '#button' => NULL,
+          '#cta' => 
+          [
+            'text' => 'Read More',
+            'url' => $content_url,
+          ],
         ];
 
         continue;
@@ -86,10 +97,18 @@ class EventOrderScheduleFormatter extends FormatterBase {
           '#theme' => 'event_order_schedule',
           '#state' => 'preorder',
           '#event_start' => $this->formatDate($event_start),
-          '#price' => $item->preorder_price,
+          '#event_end' => $this->formatDate($event_end),
+          '#event_duration' => $event_duration,
+          '#preorder_price' => $item->preorder_price,
+          '#regular_price' => $item->regular_price,
           '#button' => [
-            'text' => 'Pre-order now',
+            'text' => 'Pre-book now',
             'url' => '#',
+          ],
+          '#cta' => 
+          [
+            'text' => 'Read More',
+            'url' => $content_url,
           ],
         ];
 
@@ -107,9 +126,18 @@ class EventOrderScheduleFormatter extends FormatterBase {
           '#theme' => 'event_order_schedule',
           '#state' => 'upcoming',
           '#event_start' => $this->formatDate($event_start),
+          '#event_end' => $this->formatDate($event_end),
+          '#event_duration' => $event_duration,
+          '#regular_start' => $this->formatDate($regular_start),
           '#preorder_start' => $this->formatDate($preorder_start),
-          '#price' => $item->preorder_price,
+          '#preorder_price' => $item->preorder_price,
+          '#regular_price' => $item->regular_price,
           '#button' => NULL,
+          '#cta' => 
+          [
+            'text' => 'Read More',
+            'url' => $content_url,
+          ],
         ];
 
         continue;
@@ -133,13 +161,20 @@ class EventOrderScheduleFormatter extends FormatterBase {
           '#theme' => 'event_order_schedule',
           '#state' => 'regular',
           '#event_start' => $this->formatDate($event_start),
-          '#price' => $item->regular_price,
+          '#event_end' => $this->formatDate($event_end),
+          '#event_duration' => $event_duration,
+          '#regular_price' => $item->regular_price,
           '#button' => $can_order
             ? [
-                'text' => 'Order now',
+                'text' => 'Book now',
                 'url' => '#',
               ]
             : NULL,
+          '#cta' => 
+          [
+            'text' => 'Read More',
+            'url' => $content_url,
+          ],
         ];
 
         continue;
@@ -152,9 +187,18 @@ class EventOrderScheduleFormatter extends FormatterBase {
         '#theme' => 'event_order_schedule',
         '#state' => 'upcoming',
         '#event_start' => $this->formatDate($event_start),
+        '#event_end' => $this->formatDate($event_end),
+        '#event_duration' => $event_duration,
         '#preorder_start' => $this->formatDate($preorder_start),
-        '#price' => $item->preorder_price,
+        '#preorder_price' => $item->preorder_price,
+        '#regular_price' => $item->regular_price,
         '#button' => NULL,
+        '#content_url' => $content_url,
+        '#cta' => 
+        [
+          'text' => 'Read More',
+          'url' => $content_url,
+        ],
       ];
     }
 

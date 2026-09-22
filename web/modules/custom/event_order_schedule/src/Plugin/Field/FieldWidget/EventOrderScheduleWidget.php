@@ -75,6 +75,9 @@ class EventOrderScheduleWidget extends WidgetBase {
       '#wrapper_attributes' => [
         'class' => ['event-order-schedule-field'],
       ],
+      '#element_validate' => [
+        [static::class, 'validateEventOrderSchedule'],
+      ],
     ];
 
     $element['preorder_end'] = [
@@ -84,6 +87,9 @@ class EventOrderScheduleWidget extends WidgetBase {
       '#default_value' => $item?->preorder_end ?? '',
       '#wrapper_attributes' => [
         'class' => ['event-order-schedule-field'],
+      ],
+      '#element_validate' => [
+        [static::class, 'validateEventOrderSchedule'],
       ],
     ];
 
@@ -95,6 +101,9 @@ class EventOrderScheduleWidget extends WidgetBase {
       '#default_value' => $item?->preorder_price ?? '',
       '#wrapper_attributes' => [
         'class' => ['event-order-schedule-field'],
+      ],
+      '#element_validate' => [
+        [static::class, 'validateEventOrderSchedule'],
       ],
     ];
 
@@ -143,6 +152,75 @@ class EventOrderScheduleWidget extends WidgetBase {
       ],
     ];
     return $element;
+  }
+
+  /**
+ * {@inheritdoc}
+ */
+  public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
+    foreach ($values as &$value) {
+
+      // Convert empty optional numeric/date values to NULL.
+      if ($value['preorder_start'] === '') {
+        $value['preorder_start'] = NULL;
+      }
+
+      if ($value['preorder_end'] === '') {
+        $value['preorder_end'] = NULL;
+      }
+
+      if ($value['preorder_price'] === '') {
+        $value['preorder_price'] = NULL;
+      }
+
+      if ($value['regular_end'] === '') {
+        $value['regular_end'] = NULL;
+      }
+    }
+
+    return $values;
+  }
+
+  public static function validateEventOrderSchedule(
+    array &$element,
+    FormStateInterface $form_state,
+    array &$complete_form
+  ): void {
+    $values = $form_state->getValue($element['#parents']);
+
+    $preorder_start = $values['preorder_start'] ?? NULL;
+    $preorder_end = $values['preorder_end'] ?? NULL;
+    $preorder_price = $values['preorder_price'] ?? NULL;
+
+    // Pre-order is optional.
+    $has_preorder_dates =
+      $preorder_start !== NULL &&
+      $preorder_start !== '';
+
+    if ($has_preorder_dates) {
+      // Price is required when pre-order is configured.
+      if ($preorder_price === NULL || $preorder_price === '') {
+        $form_state->setError(
+          $element['preorder_price'],
+          t('Pre-order price cannot be empty. Enter 0 if the pre-order is not applicable or free.')
+        );
+      }
+    }
+
+    // Optional: require both pre-order dates.
+    if ($preorder_start !== '' && $preorder_end === '' && $preorder_price > 0) {
+      $form_state->setError(
+        $element['preorder_end'],
+        t('Pre-order end date is required when a pre-order start date / pre-order price is provided.')
+      );
+    }
+
+    if ($preorder_end !== '' && $preorder_start === '' && $preorder_price > 0) {
+      $form_state->setError(
+        $element['preorder_start'],
+        t('Pre-order start date is required when a pre-order end date / pre-order price is provided.')
+      );
+    }
   }
 
 }

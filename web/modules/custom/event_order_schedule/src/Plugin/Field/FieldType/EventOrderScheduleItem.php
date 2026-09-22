@@ -118,7 +118,7 @@ class EventOrderScheduleItem extends FieldItemBase {
    */
   public function isEmpty() {
     return empty($this->event_start)
-      && empty($this->event_end);
+      && empty($this->event_end)
+      && empty($this->regular_price);
   }
-
 }

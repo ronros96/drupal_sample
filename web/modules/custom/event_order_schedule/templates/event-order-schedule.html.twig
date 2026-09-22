@@ -6,65 +6,120 @@
       Event Ended
     </div>
 
+    <div class="event-order-schedule__links">
+      <a
+        href="/event/{{ cta.url }}"
+        class="event-order-schedule__cta"
+      >
+        {{ cta.text }}
+      </a>
+    </div>
+
   {% elseif state == 'upcoming' %}
 
     <div class="event-order-schedule__event">
-      <strong>Event:</strong>
-      {{ event_start }}
+      <strong>Event Schedule:</strong><br/>
+      {%- if event_duration > 1 -%}
+        {{ event_start }} to {{ event_end }}
+      {%- else -%}
+        {{ event_start }}
+      {%- endif %}
     </div>
 
     {% if preorder_start %}
       <div class="event-order-schedule__preorder-start">
-        Pre-order starts:
+        Pre-book starts:
         {{ preorder_start }}
       </div>
     {% endif %}
 
-    {% if price %}
+    {% if preorder_price > 0 %}
       <div class="event-order-schedule__price">
-        {{ price }}
+        <strong>Pre-book price</strong><br/>
+        {{ preorder_price }} <s>{{ regular_price }}</s>
+      </div>
+    {% else %}
+      <div class="event-order-schedule__price">
+        <strong>Regular price</strong><br/>
+        {{ regular_price }}
       </div>
     {% endif %}
+
+    <div class="event-order-schedule__links">
+      <a
+        href="/event/{{ cta.url }}"
+        class="event-order-schedule__cta"
+      >
+        {{ cta.text }}
+      </a>
+    </div>
 
   {% elseif state == 'preorder' %}
 
     <div class="event-order-schedule__event">
-      <strong>Event:</strong>
-      {{ event_start }}
+      <strong>Event Schedule:</strong><br/>
+      {%- if event_duration > 1 -%}
+        {{ event_start }} to {{ event_end }}
+      {%- else -%}
+        {{ event_start }}
+      {%- endif %}
     </div>
 
     <div class="event-order-schedule__price">
-      {{ price }}
+      <strong>Pre-book price</strong><br/>
+      {{ preorder_price }} <s>{{ regular_price }}</s>
     </div>
 
-    {% if button %}
+      <div class="event-order-schedule__links">
+      {% if button %}
+        <a
+          href="{{ button.url }}"
+          class="event-order-schedule__button"
+        >
+          {{ button.text }}
+        </a>
+      {% endif %}
       <a
-        href="{{ button.url }}"
-        class="event-order-schedule__button"
+        href="/event/{{ cta.url }}"
+        class="event-order-schedule__cta"
       >
-        {{ button.text }}
+        {{ cta.text }}
       </a>
-    {% endif %}
+    </div>
 
   {% elseif state == 'regular' %}
 
     <div class="event-order-schedule__event">
-      <strong>Event:</strong>
-      {{ event_start }}
+      <strong>Event Schedule:</strong><br/>
+      {%- if event_duration > 1 -%}
+        {{ event_start }} to {{ event_end }}
+      {%- else -%}
+        {{ event_start }}
+      {%- endif %}
     </div>
 
     <div class="event-order-schedule__price">
-      {{ price }}
+      <strong>Regular price</strong><br/>
+      {{ regular_price }}
     </div>
 
-    {% if button %}
+    <div class="event-order-schedule__links">
+      {% if button %}
+        <a
+          href="{{ button.url }}"
+          class="event-order-schedule__button"
+        >
+          {{ button.text }}
+        </a>
+      {% endif %}
+
       <a
-        href="{{ button.url }}"
-        class="event-order-schedule__button"
+        href="/event/{{ cta.url }}"
+        class="event-order-schedule__cta"
       >
-        {{ button.text }}
+        {{ cta.text }}
       </a>
-    {% endif %}
+    </div>
 
   {% endif %}
 
